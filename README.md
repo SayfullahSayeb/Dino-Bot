@@ -23,4 +23,4 @@ Press `F12` / `Ctrl + Shift + J` (Windows/Linux) or `Cmd + Option + J` (Mac) to 
 
 ```javascript
 fetch('https://raw.githubusercontent.com/mdsayeb7/Infinite-Dino/main/script.js')
-    .then(res => res.text()).then(script => new Function(script)());```
+    .then(res => res.text()).then(script => new Function(script)());
