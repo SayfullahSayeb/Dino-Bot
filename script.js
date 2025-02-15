@@ -3,7 +3,7 @@
     setTimeout(() => {
         // Display activation message if no errors occurred
         if (!window.errorOccurred) {
-            console.log("Bot Activated!");
+            console.log("%cBot Activated!", "font-size: 24px; color: green;");
         }
     }, 3000);
 
@@ -29,6 +29,6 @@
     } catch (error) {
         // Set errorOccurred flag to true and display error message
         window.errorOccurred = true;
-        console.error("Site not supported or an error occurred:", error);
+        console.error("%cSite not supported or an error occurred: " + error, "font-size: 24px; color: red;");
     }
 })();
