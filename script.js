@@ -13,15 +13,9 @@
     let script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js';
     script.onload = function() {
-        setTimeout(() => {
-            if (!window.errorOccurred) {
-                alertify.success("Bot Activated!");
-                console.log("%cBot Activated!", "font-size: 24px; color: green;");
-            }
-        }, 3000);
+        console.clear(); // Clear the console after script runs
 
         let botActive = false;
-        let autoJumpInterval;
 
         function autoJump() {
             if (!botActive) return;
@@ -47,14 +41,6 @@
             }
         }
 
-        function checkSite() {
-            if (window.Runner && Runner.instance_) {
-                alertify.success("Site is supported!");
-            } else {
-                alertify.error("Site not supported!");
-            }
-        }
-
         function editScore() {
             let newScore = prompt("Enter new score:");
             if (newScore && !isNaN(newScore)) {
@@ -68,14 +54,19 @@
 
         window.dinoBot = {
             toggleBot,
-            checkSite,
             editScore
         };
 
+        let siteSupported = window.Runner && Runner.instance_;
+        if (siteSupported) {
+            alertify.success("Site is supported!");
+        } else {
+            alertify.error("Site not supported!");
+        }
+
         alertify.alert("Dino Bot Loaded!", `Use the console to control the bot:<br><br>
-        <b>dinoBot.toggleBot()</b> - Activate/Stop the bot<br>
-        <b>dinoBot.checkSite()</b> - Check if the site is supported<br>
-        <b>dinoBot.editScore()</b> - Edit the current running score`);
+        <b>dinoBot.editScore()</b> - Edit the current running score<br>
+        <b>dinoBot.toggleBot()</b> - Start/Stop the bot`);
     };
     document.body.appendChild(script);
 })();
