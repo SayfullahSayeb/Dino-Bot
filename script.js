@@ -58,6 +58,7 @@
         };
 
         let siteSupported = window.Runner && Runner.instance_ ? "Site is supported!" : "Site not supported!";
+        let siteSupportedColor = window.Runner && Runner.instance_ ? "green" : "red";
 
         let botUI = document.createElement('div');
         botUI.style.position = 'fixed';
@@ -74,7 +75,7 @@
 
         botUI.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span>${siteSupported}</span>
+                <span style="background: ${siteSupportedColor}; padding: 5px; border-radius: 4px;">${siteSupported}</span>
                 <span>
                     <button id="minimizeBotUI" style="background: none; border: none; color: #fff; font-size: 16px; cursor: pointer;">🔽</button>
                     <button id="closeBotUI" style="background: none; border: none; color: #fff; font-size: 16px; cursor: pointer;">❌</button>
