@@ -1,32 +1,28 @@
 (function() {
-    // Function to add external stylesheets
-    const addLink = (href) => {
+    // Add Alertify.js styles
+    const addStylesheet = (href) => {
         let link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = href;
         document.head.appendChild(link);
     };
-    addLink('https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css');
-    addLink('https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css');
 
-    // Function to add script dynamically
-    const addScript = (src, onload) => {
-        let script = document.createElement('script');
-        script.src = src;
-        script.onload = onload;
-        document.body.appendChild(script);
-    };
+    addStylesheet('https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css');
+    addStylesheet('https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css');
 
-    addScript('https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js', function() {
+    // Load Alertify.js script
+    let script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js';
+    script.onload = function() {
         console.clear(); // Clear console after script runs
 
-        // Check if the site is supported
-        const isSupported = window.Runner && window.Runner.instance_;
-        const botActive = { status: false };
+        // Ensure notifications show in top-right
+        alertify.set('notifier', 'position', 'top-right');
 
-        // Auto-jump logic
-        const autoJump = () => {
-            if (!botActive.status || !isSupported) return;
+        let botActive = false;
+
+        function autoJump() {
+            if (!botActive) return;
             const obstacles = Runner.instance_.horizon.obstacles;
             if (obstacles.length > 0) {
                 const obstacle = obstacles[0];
@@ -37,87 +33,84 @@
                 }
             }
             requestAnimationFrame(autoJump);
-        };
+        }
 
-        // Toggle bot functionality
-        const toggleBot = () => {
-            botActive.status = !botActive.status;
-            alertify[botActive.status ? 'success' : 'error'](`Bot ${botActive.status ? 'Activated' : 'Deactivated'}!`);
-            if (botActive.status) autoJump();
-        };
+        function toggleBot() {
+            botActive = !botActive;
+            alertify[botActive ? "success" : "error"](botActive ? "Bot Activated!" : "Bot Deactivated!");
+            if (botActive) autoJump();
+        }
 
-        // Edit score function with validation
-        const editScore = () => {
-            let newScore = prompt("Enter new score (numbers only):");
-            if (!newScore || isNaN(newScore.trim()) || newScore.trim() === "") {
-                alertify.error("Invalid score! Please enter a number.");
-                return;
+        function editScore() {
+            let newScore = "";
+            while (true) {
+                newScore = prompt("Enter new score (numbers only):", newScore);
+                
+                if (newScore === null) return; // Exit if user cancels
+
+                if (/^\d+$/.test(newScore)) { // Ensure only numbers
+                    let parsedScore = parseFloat(newScore);
+                    Runner.instance_.distanceRan = parsedScore / Runner.instance_.distanceMeter.config.COEFFICIENT;
+                    Runner.instance_.distanceMeter.update(parsedScore);
+                    alertify.success(`Score updated to ${parsedScore}`);
+                    return;
+                } else {
+                    alertify.error("Invalid input! Please enter numbers only.");
+                }
             }
-            let parsedScore = parseFloat(newScore);
-            Runner.instance_.distanceRan = parsedScore / Runner.instance_.distanceMeter.config.COEFFICIENT;
-            Runner.instance_.distanceMeter.update(parsedScore);
-            alertify.success(`Score updated to ${parsedScore}`);
-        };
+        }
 
-        window.dinoBot = isSupported ? { toggleBot, editScore } : {};
+        window.dinoBot = { toggleBot, editScore };
 
-        // UI Setup
+        let siteSupported = !!(window.Runner && Runner.instance_);
+        let siteMessage = siteSupported ? "This Site is supported!" : "This Site is not supported!";
+        let siteColor = siteSupported ? "green" : "red";
+
+        // Create Bot UI
         let botUI = document.createElement('div');
-        botUI.style = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 300px;
-            background: #222;
-            color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            font-size: 14px;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        `;
+        Object.assign(botUI.style, {
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            width: '300px',
+            background: '#222',
+            color: '#fff',
+            padding: '15px',
+            borderRadius: '8px',
+            boxShadow: '0 0 10px rgba(0,0,0,0.5)',
+            fontSize: '14px',
+            zIndex: '1000',
+        });
 
-        // Header UI (with or without minimize button)
         botUI.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="background: ${isSupported ? '#28a745' : '#dc3545'}; color: white; padding: 5px; border-radius: 4px; font-weight: bold;">
-                    ${isSupported ? 'This Site is Supported!' : 'This Site is Not Supported!'}
-                </span>
+                <span style="background: ${siteColor}; color: white; padding: 5px; border-radius: 4px; font-weight: bold;">${siteMessage}</span>
                 <span>
-                    ${isSupported ? '<button id="minimizeBotUI" style="background: none; border: none; color: #fff; font-size: 16px; cursor: pointer;">🔽</button>' : ''}
+                    ${siteSupported ? `<button id="minimizeBotUI" style="background: none; border: none; color: #fff; font-size: 16px; cursor: pointer;">🔽</button>` : ""}
                     <button id="closeBotUI" style="background: none; border: none; color: #fff; font-size: 16px; cursor: pointer;">❌</button>
                 </span>
             </div>
+            ${siteSupported ? `
+            <p><b>Dino Bot Loaded!</b></p>
+            <button id="editScoreBtn" style="width: 100%; padding: 5px; margin-bottom: 10px; background: #0f62fe; color: white; border: none; border-radius: 4px; cursor: pointer;">Edit Current Score</button>
+            <button id="toggleBotBtn" style="width: 100%; padding: 5px; background: #ff5733; color: white; border: none; border-radius: 4px; cursor: pointer;">Start/ Stop Bot</button>
+            ` : ""}
         `;
-
-        // Only show controls if the site is supported
-        if (isSupported) {
-            botUI.innerHTML += `
-                <p><b>Dino Bot Loaded!</b></p>
-                <button id="editScoreBtn" style="width: 100%; padding: 10px; margin: 5px 0; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                    Edit Score
-                </button>
-                <button id="toggleBotBtn" style="width: 100%; padding: 10px; background: #fd7e14; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                    Start/Stop Bot
-                </button>
-            `;
-        }
 
         document.body.appendChild(botUI);
 
-        // Event Listeners
-        if (isSupported) {
+        if (siteSupported) {
             document.getElementById("editScoreBtn").addEventListener("click", editScore);
             document.getElementById("toggleBotBtn").addEventListener("click", toggleBot);
-
-            // Minimize button functionality
             document.getElementById("minimizeBotUI").addEventListener("click", function() {
-                botUI.style.height = botUI.style.height === '30px' ? 'auto' : '30px';
-                this.textContent = botUI.style.height === '30px' ? '🔼' : '🔽';
+                botUI.style.height = botUI.style.height === "30px" ? "auto" : "30px";
+                this.textContent = botUI.style.height === "30px" ? "🔼" : "🔽";
             });
         }
 
-        document.getElementById("closeBotUI").addEventListener("click", () => botUI.remove());
-    });
+        document.getElementById("closeBotUI").addEventListener("click", function() {
+            botUI.remove();
+        });
+    };
+    document.body.appendChild(script);
 })();
