@@ -77,8 +77,8 @@
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <span style="background: ${siteSupportedColor}; color: white; padding: 5px; border-radius: 4px; font-weight: bold;">${siteSupported}</span>
                 <span>
-                    <button id="minimizeBotUI" style="background: none; border: none; color: #fff; font-size: 16px; cursor: pointer;">🔽</button>
                     <button id="closeBotUI" style="background: none; border: none; color: #fff; font-size: 16px; cursor: pointer;">❌</button>
+                    <button id="minimizeBotUI" style="background: none; border: none; color: #fff; font-size: 16px; cursor: pointer;">🔽</button>
                 </span>
             </div>
             <p><b>Dino Bot Loaded!</b></p>
