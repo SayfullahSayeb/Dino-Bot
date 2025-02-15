@@ -57,16 +57,49 @@
             editScore
         };
 
-        let siteSupported = window.Runner && Runner.instance_;
-        if (siteSupported) {
-            alertify.success("Site is supported!");
-        } else {
-            alertify.error("Site not supported!");
-        }
+        let siteSupported = window.Runner && Runner.instance_ ? "Site is supported!" : "Site not supported!";
 
-        alertify.alert("Dino Bot Loaded!", `Use the console to control the bot:<br><br>
-        <b>dinoBot.editScore()</b> - Edit the current running score<br>
-        <b>dinoBot.toggleBot()</b> - Start/Stop the bot`);
+        let botUI = document.createElement('div');
+        botUI.style.position = 'fixed';
+        botUI.style.bottom = '20px';
+        botUI.style.right = '20px';
+        botUI.style.width = '300px';
+        botUI.style.background = '#222';
+        botUI.style.color = '#fff';
+        botUI.style.padding = '15px';
+        botUI.style.borderRadius = '8px';
+        botUI.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+        botUI.style.fontSize = '14px';
+        botUI.style.zIndex = '1000';
+
+        botUI.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span>${siteSupported}</span>
+                <span>
+                    <button id="minimizeBotUI" style="background: none; border: none; color: #fff; font-size: 16px; cursor: pointer;">🔽</button>
+                    <button id="closeBotUI" style="background: none; border: none; color: #fff; font-size: 16px; cursor: pointer;">❌</button>
+                </span>
+            </div>
+            <p><b>Dino Bot Loaded!</b></p>
+            <button id="editScoreBtn" style="width: 100%; padding: 5px; margin-bottom: 10px; background: #0f62fe; color: white; border: none; border-radius: 4px; cursor: pointer;">Edit Current Score</button>
+            <button id="toggleBotBtn" style="width: 100%; padding: 5px; background: #ff5733; color: white; border: none; border-radius: 4px; cursor: pointer;">Start/ Stop Bot</button>
+        `;
+        document.body.appendChild(botUI);
+
+        document.getElementById("editScoreBtn").addEventListener("click", editScore);
+        document.getElementById("toggleBotBtn").addEventListener("click", toggleBot);
+        document.getElementById("closeBotUI").addEventListener("click", function() {
+            botUI.remove();
+        });
+        document.getElementById("minimizeBotUI").addEventListener("click", function() {
+            if (botUI.style.height === "30px") {
+                botUI.style.height = "auto";
+                this.textContent = "🔽";
+            } else {
+                botUI.style.height = "30px";
+                this.textContent = "🔼";
+            }
+        });
     };
     document.body.appendChild(script);
 })();
