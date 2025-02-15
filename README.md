@@ -12,11 +12,6 @@ This project provides a JavaScript script that can be run in the browser console
 
 Open the Chrome browser and go to `chrome://dino` to start the game. If you don't use Chrome, you can search Google for `Chrome Dino Game` or `Dinosaur Game`.
 
-Dino Game for other browser users 
-- <a href="https://chrome-dino-game.github.io/" target="_blank">https://chrome-dino-game.github.io/</a><br>
-- <a href="https://chromedino.com/" target="_blank">https://chromedino.com/</a>
-
-
 ### Step 2: Open the Developer Console
 
 Press `F12` / `Ctrl + Shift + J` (Windows/Linux) or `Cmd + Option + J` (Mac) to open the developer console.
