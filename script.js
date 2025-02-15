@@ -16,26 +16,35 @@
         alertify.set('notifier', 'position', 'top-right');
 
         let botActive = false;
+        let toggleBtn;
 
+        // Working auto-jump logic (from your provided code)
         function autoJump() {
             if (!botActive) return;
-            let obstacles = Runner.instance_.horizon.obstacles;
-            if (obstacles.length) {
-                let { xPos, yPos } = obstacles[0];
-                let distance = xPos - Runner.instance_.tRex.xPos;
-                if (distance < 100 && yPos > 75 && !Runner.instance_.tRex.jumping) {
+            const obstacles = Runner.instance_.horizon.obstacles;
+            if (obstacles.length > 0) {
+                const obstacle = obstacles[0];
+                const distance = obstacle.xPos - Runner.instance_.tRex.xPos;
+                const height = obstacle.yPos;
+
+                if (distance < 100 && height > 75 && !Runner.instance_.tRex.jumping) {
                     Runner.instance_.tRex.startJump(0.5);
                 }
             }
             requestAnimationFrame(autoJump);
         }
 
+        // Toggle Bot activation
         function toggleBot() {
             botActive = !botActive;
             alertify[botActive ? "success" : "error"](botActive ? "Bot Activated!" : "Bot Deactivated!");
-            if (botActive) autoJump();
+            toggleBtn.textContent = botActive ? "Stop Bot" : "Start Bot";
+            if (botActive) {
+                requestAnimationFrame(autoJump);  // Start auto-jumping when bot is active
+            }
         }
 
+        // Edit the current score manually
         function editScore() {
             let newScore;
             while (true) {
@@ -75,7 +84,7 @@
             ${siteSupported ? `
                 <p><b>Dino Bot Loaded!</b></p>
                 <button id="editScoreBtn" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #0f62fe; color: white; border: none; border-radius: 4px; cursor: pointer;">Edit Current Score</button>
-                <button id="toggleBotBtn" style="width: 100%; padding: 10px; background: #ff5733; color: white; border: none; border-radius: 4px; cursor: pointer;">Start/Stop Bot</button>
+                <button id="toggleBotBtn" style="width: 100%; padding: 10px; background: #ff5733; color: white; border: none; border-radius: 4px; cursor: pointer;">Start Bot</button>
             ` : ""}
         `;
 
@@ -83,7 +92,8 @@
 
         if (siteSupported) {
             document.getElementById("editScoreBtn").addEventListener("click", editScore);
-            document.getElementById("toggleBotBtn").addEventListener("click", toggleBot);
+            toggleBtn = document.getElementById("toggleBotBtn");
+            toggleBtn.addEventListener("click", toggleBot);
             document.getElementById("minimizeBotUI").addEventListener("click", function() {
                 botUI.style.height = botUI.style.height === "30px" ? "auto" : "30px";
                 this.textContent = botUI.style.height === "30px" ? "🔼" : "🔽";
