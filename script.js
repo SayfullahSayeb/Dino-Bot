@@ -92,7 +92,7 @@
             </div>
             ${siteSupported ? `
             <p><b>Dino Bot Loaded!</b></p>
-            <button id="editScoreBtn" style="width: 100%; padding: 10x; margin-bottom: 10px; background: #0f62fe; color: white; border: none; border-radius: 4px; cursor: pointer;">Edit Current Score</button>
+            <button id="editScoreBtn" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #0f62fe; color: white; border: none; border-radius: 4px; cursor: pointer;">Edit Current Score</button>
             <button id="toggleBotBtn" style="width: 100%; padding: 10px; background: #ff5733; color: white; border: none; border-radius: 4px; cursor: pointer;">Start/Stop Bot</button>
             ` : ""}
         `;
