@@ -11,7 +11,10 @@ This project provides a JavaScript script that can be run in the browser console
 ### Step 1: Open the Chrome Dinosaur Game
 
 Open the Chrome browser and go to `chrome://dino` to start the game. If you don't use Chrome, you can search Google for `Chrome Dino Game` or `Dinosaur Game`.
-<br>
+
+Dino Game for other browser users 
+- https://chrome-dino-game.github.io/ <br>
+- https://chromedino.com/
 
 
 ### Step 2: Open the Developer Console
@@ -23,4 +26,4 @@ Press `F12` / `Ctrl + Shift + J` (Windows/Linux) or `Cmd + Option + J` (Mac) to 
 
 ```javascript
 fetch('https://raw.githubusercontent.com/mdsayeb7/Infinite-Dino/main/script.js')
-    .then(res => res.text()).then(script => new Function(script)());
+    .then(res => res.text()).then(script => new Function(script)()); 
