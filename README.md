@@ -1,4 +1,4 @@
-# Infinite-Dino
+# Dino-Bot
 
 A script to automate the Chrome Dinosaur Game, allowing the dinosaur to jump over obstacles and run indefinitely.
 
