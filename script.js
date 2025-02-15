@@ -57,7 +57,7 @@
             editScore
         };
 
-        let siteSupported = window.Runner && Runner.instance_ ? "This Site is supported!" : "Thi Site not supported!";
+        let siteSupported = window.Runner && Runner.instance_ ? "This Site is supported!" : "This Site not supported!";
         let siteSupportedColor = window.Runner && Runner.instance_ ? "green" : "red";
 
         let botUI = document.createElement('div');
