@@ -1,4 +1,7 @@
 (function() {
+    // Display activation message
+    console.log("Bot Activated!");
+
     const original = Runner.prototype.gameOver;
     Runner.prototype.gameOver = function() {};
 
