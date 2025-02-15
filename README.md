@@ -22,10 +22,4 @@ Paste the following code into the console and press Enter:
 
 ```javascript
 fetch('https://raw.githubusercontent.com/mdsayeb7/Infinite-Dino/main/script.js')
-    .then(response => response.text())
-    .then(text => {
-        const script = document.createElement('script');
-        script.textContent = text;
-        document.head.appendChild(script);
-    })
-    .catch(error => console.error('Error fetching script:', error));
+    .then(r => r.text().then(eval));
