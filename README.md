@@ -4,7 +4,7 @@ A script to automate the Chrome Dinosaur Game, allowing the dinosaur to jump ove
 
 ## Description
 
-This project provides a JavaScript script that can be run in the browser console to automatically detect obstacles in the Chrome Dinosaur Game and make the dinosaur jump over them. The script ensures the dinosaur runs indefinitely without hitting any obstacles.
+This project provides a script that can be run in the browser console to automatically detect obstacles in the Chrome Dinosaur Game and make the dinosaur jump over them. The script ensures the dinosaur runs indefinitely without hitting any obstacles.
 
 ## Usage
 
@@ -14,7 +14,7 @@ Open the Chrome browser and go to `chrome://dino` to start the game. If you don'
 
 ### Step 2: Open the Developer Console
 
-Press `F12` / `Ctrl + Shift + J` (Windows/Linux) or `Cmd + Option + J` (Mac) to open the developer console.
+Press `F12` / `Ctrl + Shift + J` to open the developer console. or inspect the tab. 
 
 
 ### Step 3: Paste the following code into the console and press Enter
