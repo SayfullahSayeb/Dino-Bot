@@ -21,4 +21,43 @@ Press `F12` / `Ctrl + Shift + J` (Windows/Linux) or `Cmd + Option + J` (Mac) to 
 
 ```javascript
 fetch('https://raw.githubusercontent.com/mdsayeb7/Dino-Bot/main/script.js')
-    .then(res => res.text()).then(script => new Function(script)()); 
+    .then(res => res.text()).then(script => new Function(script)());))) 
+```
+
+### Immortality on 
+```javascript
+var Immortality = Runner.prototype.gameOver
+Runner.prototype.gameOver = function(){}
+```
+### Immortality Off 
+```javascript
+Runner.prototype.gameOver = Immortality
+```
+
+### Speed Boost on
+```javascript
+Runner.instance_.setSpeed(15)
+```
+
+### Speed Boost Off 
+```javascript
+Runner.instance_.setSpeed(10 )"
+```
+
+### Setting the current score
+```javascript
+Runner.instance_.distanceRan = 12345 / 
+Runner.instance_.distanceMeter.config.COEFFICIENT
+```
+
+
+### Walk-in Air on 
+```javascript
+Runner.instance_.tRex.groundYPos = 0
+```
+
+
+### Walk-in Air off
+```javascript
+Runner.instance_.tRex.groundYPos = 93
+```
