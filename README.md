@@ -20,7 +20,7 @@ Press `F12` / `Ctrl + Shift + J` (Windows/Linux) or `Cmd + Option + J` (Mac) to 
 ### Step 3: Paste the following code into the console and press Enter
 
 ```javascript
-fetch('https://raw.githubusercontent.com/mdsayeb7/Dino-Bot/main/script.js')
+fetch('https://raw.githubusercontent.com/SayfullahSayeb/Dino-Bot/main/script.js')
     .then(res => res.text()).then(script => new Function(script)());
 ```
 
